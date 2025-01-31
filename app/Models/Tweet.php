@@ -25,6 +25,12 @@ class Tweet extends Authenticatable
     ];
 
 
+    // Userテーブルに対するいいねリレーション
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
+
     // ツイートに対するいいねリレーション
     public function likes()
     {

@@ -17,6 +17,7 @@
                 <li><a href="{{ route('login.home') }}">ホーム</a></li>
                 <li><a href="{{ route('tweet.index') }}">タイムライン</a></li>
                 <li><a href="{{ route('tweet.create') }}">ツイート</a></li>
+                <li><a href="{{ route('search.index') }}">検索</a></li>
                 <li><a href="{{ route('profile.likes', ['user_id' => auth()->user()->user_id]) }}">いいね</a></li>
                 <li><a href="{{ route('profile.index', ['user_id' => auth()->user()->user_id]) }}">プロフィール</a></li>
                 <li><a href="#">設定</a></li>

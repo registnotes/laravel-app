@@ -45,5 +45,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/tweet/{tweet_id}/like', [TweetController::class, 'toggleLike'])->name('tweet.like');
     // いいねしたツイート一覧
     Route::get('/profile/{user_id}/likes', [ProfileController::class, 'likedTweets'])->name('profile.likes');
-
+    // ツイート検索ページ
+    Route::get('/search', [TweetController::class, 'search'])->name('search.index');
 });

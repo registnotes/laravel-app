@@ -1,0 +1,32 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Like;
+use App\Models\User;
+use App\Models\Tweet;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Like>
+ */
+class LikeFactory extends Factory
+{
+
+    protected $model = Like::class;
+
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'user_id' => User::inRandomOrder()->first()->user_id ?? User::factory(),
+            'tweet_id' => Tweet::inRandomOrder()->first()->tweet_id ?? Tweet::factory(),
+        ];
+    }
+}

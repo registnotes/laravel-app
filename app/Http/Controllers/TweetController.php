@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Tweet;
 use Illuminate\Support\Facades\Log; //ログチェック用
 use App\Models\Like;
+use App\Models\User;
+
 
 class TweetController extends Controller
 {
@@ -15,8 +17,8 @@ class TweetController extends Controller
      */
     public function index(Request $request)
     {
-        // 最新のツイートを10件取得
-        $tweets = Tweet::latest()->paginate(10);
+        // 最新のツイートを10件取得し、ユーザー情報を合わせて取得
+        $tweets = Tweet::with('user')->latest()->paginate(10);
 
         return view('tweet.index', compact('tweets'));
     }
@@ -97,7 +99,46 @@ class TweetController extends Controller
 
 
 
-    
+    public function search(Request $request)
+    {
+        // 検索条件の取得
+        $query = Tweet::with(['user', 'likes']); // ユーザー情報も取得
+
+        // キーワード検索（ツイート内容）
+        if ($request->has('keyword')) {
+            $query->where('tweet_content', 'like', '%' . $request->input('keyword') . '%');
+        }
+
+        // ユーザー名・ユーザーID・自己紹介文検索
+        if ($request->has('user_search')) {
+            $userIds = User::where('user_name', 'like', '%' . $request->input('user_search') . '%')
+                        ->orWhere('user_id', 'like', '%' . $request->input('user_search') . '%')
+                        ->orWhere('profile_description', 'like', '%' . $request->input('user_search') . '%')
+                        ->pluck('user_id');
+
+            $query->whereIn('user_id', $userIds);
+        }
+
+        // 最新のツイート順
+        if ($request->has('sort') && $request->input('sort') === 'latest') {
+            $query->latest();
+        }
+
+        // いいね数が多い順
+        if ($request->has('sort') && $request->input('sort') === 'likes') {
+            $query->withCount('likes')->orderBy('likes_count', 'desc');
+        }
+
+        // 画像付きツイートのみ検索
+        if ($request->has('image') && $request->input('image') == 'true') {
+            $query->whereNotNull('tweet_image_path');
+        }
+
+        // 検索結果をページネーション
+        $tweets = $query->paginate(10);
+
+        return view('search.index', compact('tweets'));
+    }
 
 
 

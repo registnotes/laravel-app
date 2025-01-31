@@ -11,7 +11,7 @@
                 <div class="list-group-item">
                     <h5 class="mb-1">
                         <a href="{{ route('profile.index', ['user_id' => $tweet->user_id]) }}">
-                            {{ $tweet->user_id }}
+                            {{ $tweet->user->user_name ?? '不明なユーザー' }}
                         </a>
                     </h5>
                     <p class="mb-1">{{ $tweet->tweet_content }}</p>
@@ -26,12 +26,8 @@
                     <!-- いいねボタン -->
                     <form action="{{ route('tweet.like', $tweet->tweet_id) }}" method="POST" class="mt-2">
                         @csrf
-                        <button type="submit" class="btn btn-primary">
-                            @if($tweet->likes()->where('user_id', auth()->user()->user_id)->exists())
-                                いいね解除
-                            @else
-                                いいね
-                            @endif
+                        <button type="submit" class="btn btn-sm {{ $tweet->likes()->where('user_id', auth()->user()->user_id)->exists() ? 'btn-danger' : 'btn-outline-primary' }}">
+                            {{ $tweet->likes()->where('user_id', auth()->user()->user_id)->exists() ? 'いいね解除' : 'いいね' }}
                         </button>
                     </form>
 

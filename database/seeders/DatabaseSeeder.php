@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         // 100件のフォローデータを作成
         Following::factory(50)->create();
 
+        // LikesTableSeeder を呼び出す
+        $this->call(LikesTableSeeder::class);
+
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
