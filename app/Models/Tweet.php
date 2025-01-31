@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Like;
 
 class Tweet extends Authenticatable
 {
@@ -22,4 +23,11 @@ class Tweet extends Authenticatable
         'tweet_image_path',
 
     ];
+
+
+    // ツイートに対するいいねリレーション
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'tweet_id', 'tweet_id');
+    }
 }

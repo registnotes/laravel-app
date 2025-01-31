@@ -51,6 +51,21 @@
                         <img src="{{ Storage::url($tweet->tweet_image_path) }}" alt="Tweet Image" class="img-fluid mt-2" style="max-width: 200px; height: auto;">
                     @endif
                     <small class="text-muted">投稿日: {{ $tweet->created_at->format('Y-m-d H:i') }}</small>
+
+                    <!-- いいねボタン -->
+                    <form action="{{ route('tweet.like', $tweet->tweet_id) }}" method="POST" class="mt-2">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">
+                            @if($tweet->likes()->where('user_id', auth()->user()->user_id)->exists())
+                                いいね解除
+                            @else
+                                いいね
+                            @endif
+                        </button>
+                    </form>
+
+                    <!-- いいね数の表示 -->
+                    <small>{{ $tweet->likes->count() }} いいね</small>
                 </div>
             </div>
         @endforeach

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tweet;
 use Illuminate\Support\Facades\Log; //ログチェック用
+use App\Models\Like;
 
 class TweetController extends Controller
 {
@@ -62,5 +63,43 @@ class TweetController extends Controller
         
         return redirect()->route('tweet.index')->with('success', 'ツイートを投稿しました。');
     }
+
+
+
+
+
+
+    // いいねを追加または解除する処理
+    public function toggleLike($tweet_id)
+    {
+        $user_id = auth()->user()->user_id; // 現在ログインしているユーザーのID
+
+        // いいねが存在するかを確認
+        $like = Like::where('user_id', $user_id)->where('tweet_id', $tweet_id)->first();
+
+        if ($like) {
+            // 既にいいねしている場合は解除
+            $like->delete();
+            return back()->with('success', 'いいねを解除しました');
+        } else {
+            // まだいいねしていない場合は追加
+            Like::create([
+                'user_id' => $user_id,
+                'tweet_id' => $tweet_id,
+            ]);
+            return back()->with('success', 'いいねしました');
+        }
+    }
+
+
+
+
+
+
+
+    
+
+
+
 
 }

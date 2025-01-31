@@ -41,7 +41,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/following/{user_id}', [ProfileController::class, 'following'])->name('profile.following');
     //フォロワー一覧表示
     Route::get('/follower/{user_id}', [ProfileController::class, 'followers'])->name('profile.followers');
-
-
+    // ツイートへのいいね・いいね解除
+    Route::post('/tweet/{tweet_id}/like', [TweetController::class, 'toggleLike'])->name('tweet.like');
+    // いいねしたツイート一覧
+    Route::get('/profile/{user_id}/likes', [ProfileController::class, 'likedTweets'])->name('profile.likes');
 
 });

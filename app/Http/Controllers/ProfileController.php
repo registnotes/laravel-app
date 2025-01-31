@@ -65,4 +65,25 @@ class ProfileController extends Controller
     }
 
 
+
+
+
+
+
+
+    public function likedTweets($user_id)
+    {
+        // ユーザーがいいねしたツイートを取得
+        $user = User::where('user_id', $user_id)->firstOrFail();
+
+        // ユーザーがいいねしたツイートを取得
+        $likedTweets = Tweet::whereHas('likes', function($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->latest()->paginate(10);
+
+        // ビューに渡すデータ
+        return view('profile.likes', compact('likedTweets', 'user'));
+    }
+
+
 }
