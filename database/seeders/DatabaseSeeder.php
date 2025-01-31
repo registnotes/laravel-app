@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Tweet;
+use App\Models\Following;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,8 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(2)->create();
-        Tweet::factory(3)->create();
+        User::factory(10)->create();
+        Tweet::factory(30)->create();
+
+        // 100件のフォローデータを作成
+        Following::factory(50)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',

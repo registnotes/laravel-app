@@ -53,4 +53,39 @@ class User extends Authenticatable
     //         'password' => 'hashed',
     //     ];
     // }
+
+
+
+
+    // フォローする
+    public function follow($user_id)
+    {
+        return $this->followings()->create(['following_user_id' => $user_id]);
+    }
+
+    // アンフォローする
+    public function unfollow($user_id)
+    {
+        return $this->followings()->where('following_user_id', $user_id)->delete();
+    }
+
+    // フォローしているユーザーを取得
+    public function followings()
+    {
+        return $this->hasMany(Following::class, 'follower_user_id', 'user_id');
+    }
+
+    // フォロワーを取得
+    public function followers()
+    {
+        return $this->hasMany(Following::class, 'following_user_id', 'user_id');
+    }
+
+    // フォローしているかどうかの確認
+    public function isFollowing($user_id)
+    {
+        return $this->followings()->where('following_user_id', $user_id)->exists();
+    }
+
+
 }

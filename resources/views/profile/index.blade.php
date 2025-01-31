@@ -14,6 +14,31 @@
         </div>
     </div>
 
+    <!-- フォロー/アンフォローボタン -->
+    @if(auth()->user()->user_id != $user->user_id)
+        @if($isFollowing)
+            <form action="{{ route('unfollow', $user->user_id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">アンフォロー</button>
+            </form>
+        @else
+            <form action="{{ route('follow', $user->user_id) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary">フォロー</button>
+            </form>
+        @endif
+    @endif
+
+    <!-- フォロー・フォロワーのリンク -->
+    <div class="mt-4">
+        <h5>フォロー</h5>
+        <a href="{{ route('profile.following', $user->user_id) }}" class="btn btn-link">フォローしている人を見る</a>
+
+        <h5 class="mt-2">フォロワー</h5>
+        <a href="{{ route('profile.followers', $user->user_id) }}" class="btn btn-link">フォロワーを見る</a>
+    </div>
+
     <!-- ユーザーの投稿（ツイート）一覧 -->
     <div class="mt-4">
         <h4>ツイート</h4>

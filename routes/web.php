@@ -33,5 +33,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/tweet', [TweetController::class, 'store'])->name('tweet.store');
     //プロフィール表示
     Route::get('/profile/{user_id}', [ProfileController::class, 'index'])->name('profile.index');
+    // フォロー処理
+    Route::post('/follow/{user_id}', [ProfileController::class, 'follow'])->name('follow');
+    // アンフォロー処理
+    Route::delete('/unfollow/{user_id}', [ProfileController::class, 'unfollow'])->name('unfollow');
+    //フォロー一覧表示
+    Route::get('/following/{user_id}', [ProfileController::class, 'following'])->name('profile.following');
+    //フォロワー一覧表示
+    Route::get('/follower/{user_id}', [ProfileController::class, 'followers'])->name('profile.followers');
+
+
 
 });
