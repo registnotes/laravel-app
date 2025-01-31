@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\TweetController;
+use App\Http\Controllers\ProfileController;
 
 Auth::routes();
 
@@ -23,4 +25,13 @@ Route::group(['middleware' => ['auth']], function() {
     })->name('login.home')->middleware();
     //ログアウト
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    //ツイート表示
+    Route::get('/tweet', [TweetController::class, 'index']) ->name('tweet.index');
+    //ツイート入力画面
+    Route::get('/tweet/create', [TweetController::class, 'create'])->name('tweet.create');
+    //ツイート投稿処理
+    Route::post('/tweet', [TweetController::class, 'store'])->name('tweet.store');
+    //プロフィール表示
+    Route::get('/profile/{user_id}', [ProfileController::class, 'index'])->name('profile.index');
+
 });
