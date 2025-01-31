@@ -94,11 +94,8 @@
                 </ul>
             </div>
         @endif
-        @if (session('login_error'))
-            <div class="alert alert-danger">
-                {{ session('login_error') }}
-            </div>
-        @endif
+
+        <x-alert type="danger" :session="session('danger')"/>
 
         <div class="mb-3">
             <label for="inputEmail" class="form-label">メールアドレス</label>

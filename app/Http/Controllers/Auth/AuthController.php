@@ -32,11 +32,27 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->route('login.home')->with('login_success', 'ログイン成功しました！');
+            return redirect()->route('login.home')->with('success', 'ログイン成功しました！');
         }
 
         return back()->withErrors([
-            'login_error' => 'メールアドレスかパスワードが間違っています。',
+            'danger' => 'メールアドレスかパスワードが間違っています。',
         ]);
+    }
+
+
+
+    /**
+     * Log the user out of the application.
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+    
+        $request->session()->invalidate();
+    
+        $request->session()->regenerateToken();
+    
+        return redirect()->route('showLogin')->with('danger', 'ログアウトしました！');
     }
 }
