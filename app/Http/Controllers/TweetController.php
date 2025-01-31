@@ -99,24 +99,14 @@ class TweetController extends Controller
 
 
 
-    public function search(Request $request)
+    // ツイート検索の処理
+    public function searchTweets(Request $request)
     {
-        // 検索条件の取得
         $query = Tweet::with(['user', 'likes']); // ユーザー情報も取得
 
         // キーワード検索（ツイート内容）
         if ($request->has('keyword')) {
             $query->where('tweet_content', 'like', '%' . $request->input('keyword') . '%');
-        }
-
-        // ユーザー名・ユーザーID・自己紹介文検索
-        if ($request->has('user_search')) {
-            $userIds = User::where('user_name', 'like', '%' . $request->input('user_search') . '%')
-                        ->orWhere('user_id', 'like', '%' . $request->input('user_search') . '%')
-                        ->orWhere('profile_description', 'like', '%' . $request->input('user_search') . '%')
-                        ->pluck('user_id');
-
-            $query->whereIn('user_id', $userIds);
         }
 
         // 最新のツイート順
@@ -137,7 +127,40 @@ class TweetController extends Controller
         // 検索結果をページネーション
         $tweets = $query->paginate(10);
 
-        return view('search.index', compact('tweets'));
+        return view('search.tweet', compact('tweets'));
+    }
+
+    // ユーザー検索の処理
+    public function searchUsers(Request $request)
+    {
+        $query = User::query();
+
+        // ユーザー名・ユーザーID・自己紹介文検索
+        if ($request->has('user_search')) {
+            $query->where('user_name', 'like', '%' . $request->input('user_search') . '%')
+                ->orWhere('user_id', 'like', '%' . $request->input('user_search') . '%')
+                ->orWhere('profile_description', 'like', '%' . $request->input('user_search') . '%');
+        }
+
+        // ソートの処理
+        if ($request->has('sort')) {
+            switch ($request->input('sort')) {
+                case 'followers':
+                    $query->withCount('followers')->orderBy('followers_count', 'desc');
+                    break;
+                case 'posts':
+                    $query->withCount('tweets')->orderBy('tweets_count', 'desc');
+                    break;
+                case 'joined':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        }
+
+        // 検索結果をページネーション
+        $users = $query->paginate(10);
+
+        return view('search.user', compact('users'));
     }
 
 

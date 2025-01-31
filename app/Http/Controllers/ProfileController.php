@@ -86,4 +86,21 @@ class ProfileController extends Controller
     }
 
 
+
+
+    // ユーザーの画像付きツイート一覧
+    public function media($user_id)
+    {
+        // ユーザー情報を取得
+        $user = User::where('user_id', $user_id)->firstOrFail();
+        
+        // 画像付きツイートを取得
+        $tweets = Tweet::where('user_id', $user_id)
+            ->whereNotNull('tweet_image_path') // 画像があるツイートのみ
+            ->get();
+        
+        return view('profile.media', compact('user', 'tweets'));
+    }
+
+
 }

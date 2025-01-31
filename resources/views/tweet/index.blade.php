@@ -9,7 +9,7 @@
         <div class="list-group">
             @foreach($tweets as $tweet)
                 <div class="list-group-item">
-                    <h5 class="mb-1">
+                    <h4 class="mb-1">
                         <a href="{{ route('profile.index', ['user_id' => $tweet->user_id]) }}">
                             {{ $tweet->user->user_name ?? '不明なユーザー' }}
                         </a>

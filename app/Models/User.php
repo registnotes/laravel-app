@@ -88,4 +88,14 @@ class User extends Authenticatable
     }
 
 
+
+
+
+    // Userモデル
+    public function tweets()
+    {
+        return $this->hasMany(Tweet::class, 'user_id');
+    }
+
+
 }

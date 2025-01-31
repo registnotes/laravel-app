@@ -5,15 +5,10 @@
     <h2>ツイート検索</h2>
 
     <!-- 検索フォーム -->
-    <form method="GET" action="{{ route('search.index') }}">
+    <form method="GET" action="{{ route('search.tweet') }}">
         <div class="mb-3">
             <label for="keyword">キーワード検索</label>
             <input type="text" id="keyword" name="keyword" class="form-control" value="{{ request('keyword') }}" placeholder="ツイート内容で検索">
-        </div>
-        
-        <div class="mb-3">
-            <label for="user_search">ユーザー検索（名前・ID・自己紹介文）</label>
-            <input type="text" id="user_search" name="user_search" class="form-control" value="{{ request('user_search') }}" placeholder="ユーザー名・ID・自己紹介文で検索">
         </div>
 
         <div class="mb-3">
