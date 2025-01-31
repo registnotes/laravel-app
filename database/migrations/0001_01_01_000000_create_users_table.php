@@ -12,12 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->string('user_id', 15)->primary();
+            $table->string('user_name', 30);
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('profile_description', 140)->nullable();
+            $table->string('header_image_url')->default('https://i.gyazo.com/d671b3ffc77de5382afd09d6f704832c.png');
+            $table->string('profile_image_url')->default('https://i.gyazo.com/d671b3ffc77de5382afd09d6f704832c.png');
+            $table->string('profile_url')->nullable();
             $table->timestamps();
         });
 

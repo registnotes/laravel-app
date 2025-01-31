@@ -5,6 +5,8 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Faker\Factory as Faker; // ここを追加
+
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -23,12 +25,20 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+
+
+
         return [
-            'name' => fake()->name(),
+            'user_id' => Str::random(15),  // 15文字のランダム文字列
+            'user_name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'profile_description' => fake()->realText(140),
+            'header_image_url' => 'https://i.gyazo.com/d671b3ffc77de5382afd09d6f704832c.png',
+            'profile_image_url' => 'https://i.gyazo.com/d671b3ffc77de5382afd09d6f704832c.png',
+            'profile_url' => $this->faker->url(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 
