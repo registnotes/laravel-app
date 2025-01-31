@@ -94,15 +94,20 @@
                 </ul>
             </div>
         @endif
+        @if (session('login_error'))
+            <div class="alert alert-danger">
+                {{ session('login_error') }}
+            </div>
+        @endif
 
         <div class="mb-3">
             <label for="inputEmail" class="form-label">メールアドレス</label>
-            <input type="email" id="inputEmail" name="email" class="form-control" placeholder="メールアドレスを入力" required autofocus value="{{ old('email') }}">
+            <input type="email" id="email" name="email" class="form-control" placeholder="メールアドレスを入力" required autofocus value="{{ old('email') }}">
         </div>
 
         <div class="mb-3">
             <label for="inputPassword" class="form-label">パスワード</label>
-            <input type="password" id="inputPassword" name="password" class="form-control" placeholder="パスワードを入力" required>
+            <input type="password" id="password" name="password" class="form-control" placeholder="パスワードを入力" required>
         </div>
 
         <button class="btn btn-primary btn-lg btn-block" type="submit">ログイン</button>
