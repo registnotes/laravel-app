@@ -11,10 +11,16 @@
                 <div class="list-group-item">
                     <h5 class="mb-1">
                         <a href="{{ route('profile.index', ['user_id' => $tweet->user_id]) }}">
-                            ユーザーID: {{ $tweet->user_id }}
+                            {{ $tweet->user_id }}
                         </a>
                     </h5>
                     <p class="mb-1">{{ $tweet->tweet_content }}</p>
+
+                    <!-- 画像がある場合に表示 -->
+                    @if($tweet->tweet_image_path)
+                        <img src="{{ Storage::url($tweet->tweet_image_path) }}" alt="Tweet Image" class="img-fluid mt-2" style="max-width: 200px; height: auto;">
+                    @endif
+
                     <small>{{ $tweet->created_at->diffForHumans() }}</small>
                 </div>
             @endforeach

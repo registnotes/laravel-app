@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('tweet_id', 20)->primary();
             $table->string('user_id', 15);
             $table->string('tweet_content', 140);
+            $table->string('tweet_image_path')->nullable();
             $table->timestamps();
         });
     }

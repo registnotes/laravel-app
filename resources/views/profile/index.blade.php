@@ -46,6 +46,10 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <p>{{ $tweet->tweet_content }}</p>
+                    <!-- 画像がある場合に表示 -->
+                    @if($tweet->tweet_image_path)
+                        <img src="{{ Storage::url($tweet->tweet_image_path) }}" alt="Tweet Image" class="img-fluid mt-2" style="max-width: 200px; height: auto;">
+                    @endif
                     <small class="text-muted">投稿日: {{ $tweet->created_at->format('Y-m-d H:i') }}</small>
                 </div>
             </div>

@@ -19,6 +19,7 @@ class Tweet extends Authenticatable
         'tweet_id',
         'user_id',
         'tweet_content',
+        'tweet_image_path',
 
     ];
 }
