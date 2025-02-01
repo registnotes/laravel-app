@@ -103,4 +103,61 @@ class ProfileController extends Controller
     }
 
 
+
+
+
+
+
+    public function edit($user_id)
+    {
+        $user = User::where('user_id', $user_id)->firstOrFail();
+
+        // ログインユーザーのみ編集可能
+        if (auth()->user()->user_id !== $user->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('profile.edit', compact('user'));
+    }
+
+    public function update(Request $request, $user_id)
+    {
+        $user = User::where('user_id', $user_id)->firstOrFail();
+
+        // ログインユーザーのみ編集可能
+        if (auth()->user()->user_id !== $user->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $validated = $request->validate([
+            'user_name' => 'required|string|max:30',
+            'profile_description' => 'nullable|string|max:140',
+            'profile_url' => 'nullable|url',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'header_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+        ]);
+
+        // 画像のアップロード処理
+        if ($request->hasFile('profile_image')) {
+            $profileImagePath = $request->file('profile_image')->store('profile_images', 'public');
+            $user->profile_image_url = asset('storage/' . $profileImagePath);
+        }
+        
+        if ($request->hasFile('header_image')) {
+            $headerImagePath = $request->file('header_image')->store('header_images', 'public');
+            $user->header_image_url = asset('storage/' . $headerImagePath);
+        }
+
+        // その他のデータを更新
+        $user->update([
+            'user_name' => $validated['user_name'],
+            'profile_description' => $validated['profile_description'],
+            'profile_url' => $validated['profile_url'],
+        ]);
+
+        return redirect()->route('profile.index', $user->user_id)->with('success', 'プロフィールが更新されました。');
+    }
+
+
+
 }

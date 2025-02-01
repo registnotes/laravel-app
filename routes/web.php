@@ -33,6 +33,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/tweet', [TweetController::class, 'store'])->name('tweet.store');
     //プロフィール表示
     Route::get('/profile/{user_id}', [ProfileController::class, 'index'])->name('profile.index');
+    //プロフィール編集画面
+    Route::get('/profile/{user_id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    //プロフィール更新処理
+    Route::post('/profile/{user_id}/update', [ProfileController::class, 'update'])->name('profile.update');
     // フォロー処理
     Route::post('/follow/{user_id}', [ProfileController::class, 'follow'])->name('follow');
     // アンフォロー処理
