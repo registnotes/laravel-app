@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker; // ここを追加
+use Illuminate\Support\Facades\File;
 
 
 /**
@@ -26,6 +27,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
 
+        // ランダムにプロフィール画像とヘッダー画像を選択
+        $profileImages = File::files(storage_path('app/public/profile_images_seed'));
+        $headerImages = File::files(storage_path('app/public/header_images_seed'));
+
+        // ランダムにファイルを選択
+        $randomProfileImage = $profileImages[array_rand($profileImages)];
+        $randomHeaderImage = $headerImages[array_rand($headerImages)];
+
 
 
         return [
@@ -34,8 +43,8 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
             'profile_description' => fake()->realText(140),
-            'header_image_url' => 'storage/images/default_header_image.png',
-            'profile_image_url' => 'storage/images/default_profile_image.png',
+            'header_image_url' => 'storage/header_images_seed/' . basename($randomHeaderImage),
+            'profile_image_url' => 'storage/profile_images_seed/' . basename($randomProfileImage),
             'profile_url' => $this->faker->url(),
             'created_at' => now(),
             'updated_at' => now(),

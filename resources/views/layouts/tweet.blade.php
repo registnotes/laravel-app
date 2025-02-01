@@ -22,7 +22,7 @@
 
     <!-- 画像がある場合に表示 -->
     @if($tweet->tweet_image_path)
-        <img src="{{ Storage::url($tweet->tweet_image_path) }}" alt="Tweet Image" class="img-fluid mt-2" style="max-width: 200px; height: auto;">
+        <img src="{{ asset($tweet->tweet_image_path) }}" alt="Tweet Image" class="img-fluid mt-2" style="max-width: 200px; height: auto;">
     @endif
 
     <!-- いいねボタン -->

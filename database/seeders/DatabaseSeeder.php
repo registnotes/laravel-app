@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
-        Tweet::factory(30)->create();
+        User::factory(100)->create();
+        Tweet::factory(500)->create();
 
         // 100件のフォローデータを作成
-        Following::factory(50)->create();
+        Following::factory(1000)->create();
 
         // LikesTableSeeder を呼び出す
         $this->call(LikesTableSeeder::class);
