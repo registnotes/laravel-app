@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profile_description', 140)->nullable();
-            $table->string('header_image_url')->default('https://i.gyazo.com/d671b3ffc77de5382afd09d6f704832c.png');
-            $table->string('profile_image_url')->default('https://i.gyazo.com/d671b3ffc77de5382afd09d6f704832c.png');
+            $table->string('header_image_url')->default('storage/images/default_header_image.png');
+            $table->string('profile_image_url')->default('storage/images/default_profile_image.png');
             $table->string('profile_url')->nullable();
             $table->timestamps();
         });
