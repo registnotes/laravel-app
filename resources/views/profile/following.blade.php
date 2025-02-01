@@ -5,15 +5,16 @@
     <h3>{{ $user->user_name }}のフォローしている人</h3>
 
     @if($following->count() > 0)
-        <ul>
+        <div class="users">
             @foreach($following as $follow)
-                <li>
-                    <a href="{{ route('profile.index', $follow->followingUser->user_id) }}">
-                        {{ $follow->followingUser->user_name }}
-                    </a>
-                </li>
+                @include('layouts.user', ['user' => $follow->followingUser])
             @endforeach
-        </ul>
+        </div>
+
+        <!-- ページネーション -->
+        <div class="mt-4">
+            {{ $following->links() }}
+        </div>
     @else
         <p>フォローしている人はいません。</p>
     @endif

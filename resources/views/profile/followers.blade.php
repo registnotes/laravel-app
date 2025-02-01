@@ -5,15 +5,16 @@
     <h3>{{ $user->user_name }}のフォロワー</h3>
 
     @if($followers->count() > 0)
-        <ul>
+        <div class="users">
             @foreach($followers as $follower)
-                <li>
-                    <a href="{{ route('profile.index', $follower->followerUser->user_id) }}">
-                        {{ $follower->followerUser->user_name }}
-                    </a>
-                </li>
+                @include('layouts.user', ['user' => $follower->followerUser])
             @endforeach
-        </ul>
+        </div>
+
+        <!-- ページネーション -->
+        <div class="mt-4">
+            {{ $followers->links() }}
+        </div>
     @else
         <p>フォロワーはいません。</p>
     @endif

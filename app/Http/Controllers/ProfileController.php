@@ -50,7 +50,7 @@ class ProfileController extends Controller
     public function following($user_id)
     {
         $user = User::where('user_id', $user_id)->firstOrFail();
-        $following = $user->followings; // 'following' -> 'followings'に変更
+        $following = $user->followings()->paginate(10);  // ページネーションを追加
 
         return view('profile.following', compact('user', 'following'));
     }
@@ -59,7 +59,7 @@ class ProfileController extends Controller
     public function followers($user_id)
     {
         $user = User::where('user_id', $user_id)->firstOrFail();
-        $followers = $user->followers;
+        $followers = $user->followers()->paginate(10);  // ページネーションを追加
 
         return view('profile.followers', compact('user', 'followers'));
     }
