@@ -1,25 +1,26 @@
 <!-- resources/views/layouts/user.blade.php -->
-<div class="user border p-3 mb-3">
+<div class="list-group-item">
     <div class="d-flex">
         <!-- アイコン画像 -->
-        <div class="mr-3">
-        <img src="{{ $user->profile_image_url ? asset($user->profile_image_url) : asset('storage/image/default_profile_image.png') }}" alt="アイコン" class="rounded-circle" width="50" height="50">
+        <img src="{{ $user->profile_image_url ? asset($user->profile_image_url) : asset('storage/image/default_profile_image.png') }}" alt="アイコン" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
 
-        </div>
-        
-        <!-- ユーザー情報 -->
-        <div>
-            <p>
-                <strong>
-                    <a href="{{ route('profile.index', ['user_id' => $user->user_id]) }}">
-                        {{ $user->user_name ?? '不明なユーザー' }}
-                    </a>
-                </strong> ({{ $user->user_id ?? '不明' }})
-            </p>
-            <p>{{ $user->profile_description ?? '自己紹介文はありません' }}</p>
-            <p>フォロワー数: {{ $user->followers->count() }}</p>
-            <p>投稿数: {{ $user->tweets->count() }}</p>
-            <p>登録日: {{ $user->created_at->format('Y-m-d') }}</p>
+        <div class="ms-2">
+            <!-- ユーザー名とID -->
+            <h5 class="mb-0">
+                <a href="{{ route('profile.index', ['user_id' => $user->user_id]) }}">
+                    {{ $user->user_name ?? '不明なユーザー' }}
+                </a>
+                <small class="text-muted"> ({{ $user->user_id ?? '不明' }})</small>
+            </h5>
+
+            <!-- プロフィール内容 -->
+            <p class="mb-1">{{ $user->profile_description ?? '自己紹介文はありません' }}</p>
+
+            <!-- フォロワー数、投稿数 -->
+            <p class="text-muted mb-1">フォロワー数: {{ $user->followers->count() }} | 投稿数: {{ $user->tweets->count() }}</p>
+
+            <!-- 登録日 -->
+            <small class="text-muted">登録日: {{ $user->created_at->format('Y-m-d') }}</small>
         </div>
     </div>
 </div>

@@ -31,10 +31,9 @@
 
     <!-- 検索結果 -->
     @if ($tweets->count() > 0)
-        <div class="tweets">
+        <div class="list-group">
             @foreach ($tweets as $tweet)
                 @include('layouts.tweet', ['tweet' => $tweet])
-                <hr>
             @endforeach
         </div>
 

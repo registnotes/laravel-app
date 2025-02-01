@@ -5,7 +5,7 @@
     <h3>{{ $user->user_name }}のフォロワー</h3>
 
     @if($followers->count() > 0)
-        <div class="users">
+        <div class="list-group">
             @foreach($followers as $follower)
                 @include('layouts.user', ['user' => $follower->followerUser])
             @endforeach

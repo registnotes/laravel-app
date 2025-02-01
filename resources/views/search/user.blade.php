@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="content">
     <h2>ユーザー検索</h2>
 
     <!-- 検索フォーム -->
@@ -27,7 +27,7 @@
 
     <!-- 検索結果 -->
     @if ($users->count() > 0)
-        <div class="users">
+        <div class="list-group">
             @foreach ($users as $user)
                 @include('layouts.user', ['user' => $user])
             @endforeach

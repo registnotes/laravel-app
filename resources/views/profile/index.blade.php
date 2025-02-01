@@ -45,7 +45,7 @@
     </div>
 
     <!-- ユーザーの投稿（ツイート）一覧 -->
-    <div class="mt-4">
+    <div class="list-group">
         <h4>ツイート</h4>
         @foreach($tweets as $tweet)
             @include('layouts.tweet', ['tweet' => $tweet])

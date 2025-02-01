@@ -5,7 +5,7 @@
     <h3>{{ $user->user_name }}のフォローしている人</h3>
 
     @if($following->count() > 0)
-        <div class="users">
+        <div class="list-group">
             @foreach($following as $follow)
                 @include('layouts.user', ['user' => $follow->followingUser])
             @endforeach
