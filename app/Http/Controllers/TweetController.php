@@ -166,4 +166,42 @@ class TweetController extends Controller
 
 
 
+
+
+
+
+
+
+    public function likedTweets($user_id)
+    {
+        $user = User::where('user_id', $user_id)->firstOrFail();
+    
+        // いいねしたツイートを取得
+        $likedTweets = Tweet::whereHas('likes', function ($query) use ($user) {
+            $query->where('user_id', $user->user_id);
+        })->latest()->paginate(10);
+    
+        return view('profile.likes', compact('user', 'likedTweets'));
+    }
+    
+    public function mediaTweets($user_id)
+    {
+        // ユーザーを取得
+        $user = User::where('user_id', $user_id)->firstOrFail();
+
+        // 画像付きツイートを取得し、ページネーションを適用
+        $mediaTweets = Tweet::where('user_id', $user->user_id)
+                        ->whereNotNull('tweet_image_path')
+                        ->latest()
+                        ->paginate(10);  // ページネーションを設定
+
+        return view('profile.media', compact('user', 'mediaTweets'));
+    }
+    
+
+
+
+
+
+
 }

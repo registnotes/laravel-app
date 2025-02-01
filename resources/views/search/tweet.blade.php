@@ -33,33 +33,8 @@
     @if ($tweets->count() > 0)
         <div class="tweets">
             @foreach ($tweets as $tweet)
-            <div class="tweet border p-3 mb-3">
-                <p>
-                    <strong>
-                        <a href="{{ route('profile.index', ['user_id' => $tweet->user_id]) }}">
-                            {{ $tweet->user->user_name ?? '不明なユーザー' }}
-                        </a>
-                    </strong> ({{ $tweet->user->user_id ?? '不明' }})
-                </p>
-                <p>{{ $tweet->tweet_content }}</p>
-
-                @if ($tweet->tweet_image_path)
-                    <img src="{{ Storage::url($tweet->tweet_image_path) }}" alt="画像" class="img-fluid" style="max-width: 200px;">
-                @endif
-
-                <!-- いいねボタン -->
-                <form action="{{ route('tweet.like', $tweet->tweet_id) }}" method="POST" class="mt-2">
-                    @csrf
-                    <button type="submit" class="btn btn-sm {{ $tweet->likes()->where('user_id', auth()->user()->user_id)->exists() ? 'btn-danger' : 'btn-outline-primary' }}">
-                        {{ $tweet->likes()->where('user_id', auth()->user()->user_id)->exists() ? 'いいね解除' : 'いいね' }}
-                    </button>
-                </form>
-
-                <!-- いいね数の表示 -->
-                <small>{{ $tweet->likes->count() }} いいね</small>
-
+                @include('layouts.tweet', ['tweet' => $tweet])
                 <hr>
-            </div>
             @endforeach
         </div>
 

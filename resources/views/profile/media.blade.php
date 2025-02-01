@@ -4,19 +4,16 @@
 <div class="container">
     <h3>{{ $user->user_name }} の画像付きツイート</h3>
 
-    @if($tweets->count() > 0)
-        <div class="row">
-            @foreach($tweets as $tweet)
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ Storage::url($tweet->tweet_image_path) }}" alt="Tweet Image" class="card-img-top" style="width: 200px; height: auto;">
-                        <div class="card-body">
-                            <p class="card-text">{{ $tweet->tweet_content }}</p>
-                            <small class="text-muted">投稿日: {{ $tweet->created_at->format('Y-m-d H:i') }}</small>
-                        </div>
-                    </div>
-                </div>
+    @if($mediaTweets->count() > 0)
+        <div class="list-group">
+            @foreach($mediaTweets as $tweet)
+                @include('layouts.tweet', ['tweet' => $tweet])
             @endforeach
+        </div>
+
+        <!-- ページネーション -->
+        <div class="mt-4">
+            {{ $mediaTweets->links() }}
         </div>
     @else
         <p>{{ $user->user_name }} の画像付きツイートはありません。</p>

@@ -48,31 +48,7 @@
     <div class="mt-4">
         <h4>ツイート</h4>
         @foreach($tweets as $tweet)
-            <div class="card mb-3">
-                <div class="card-body">
-                    <p>{{ $tweet->tweet_content }}</p>
-                    <!-- 画像がある場合に表示 -->
-                    @if($tweet->tweet_image_path)
-                        <img src="{{ Storage::url($tweet->tweet_image_path) }}" alt="Tweet Image" class="img-fluid mt-2" style="max-width: 200px; height: auto;">
-                    @endif
-                    <small class="text-muted">投稿日: {{ $tweet->created_at->format('Y-m-d H:i') }}</small>
-
-                    <!-- いいねボタン -->
-                    <form action="{{ route('tweet.like', $tweet->tweet_id) }}" method="POST" class="mt-2">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">
-                            @if($tweet->likes()->where('user_id', auth()->user()->user_id)->exists())
-                                いいね解除
-                            @else
-                                いいね
-                            @endif
-                        </button>
-                    </form>
-
-                    <!-- いいね数の表示 -->
-                    <small>{{ $tweet->likes->count() }} いいね</small>
-                </div>
-            </div>
+            @include('layouts.tweet', ['tweet' => $tweet])
         @endforeach
     </div>
 </div>

@@ -73,33 +73,28 @@ class ProfileController extends Controller
 
     public function likedTweets($user_id)
     {
-        // ユーザーがいいねしたツイートを取得
         $user = User::where('user_id', $user_id)->firstOrFail();
-
-        // ユーザーがいいねしたツイートを取得
-        $likedTweets = Tweet::whereHas('likes', function($query) use ($user_id) {
-            $query->where('user_id', $user_id);
+    
+        // いいねしたツイートを取得
+        $likedTweets = Tweet::whereHas('likes', function ($query) use ($user) {
+            $query->where('user_id', $user->user_id);
         })->latest()->paginate(10);
-
-        // ビューに渡すデータ
-        return view('profile.likes', compact('likedTweets', 'user'));
+    
+        return view('profile.likes', compact('user', 'likedTweets'));
     }
-
-
-
-
-    // ユーザーの画像付きツイート一覧
-    public function media($user_id)
+    
+    public function mediaTweets($user_id)
     {
-        // ユーザー情報を取得
+        // ユーザーを取得
         $user = User::where('user_id', $user_id)->firstOrFail();
-        
-        // 画像付きツイートを取得
-        $tweets = Tweet::where('user_id', $user_id)
-            ->whereNotNull('tweet_image_path') // 画像があるツイートのみ
-            ->get();
-        
-        return view('profile.media', compact('user', 'tweets'));
+
+        // 画像付きツイートを取得し、ページネーションを適用
+        $mediaTweets = Tweet::where('user_id', $user->user_id)
+                        ->whereNotNull('tweet_image_path')
+                        ->latest()
+                        ->paginate(10);  // ページネーションを設定
+
+        return view('profile.media', compact('user', 'mediaTweets'));
     }
 
 
