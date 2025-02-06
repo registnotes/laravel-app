@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="card">
-        <p class="card-header text-center" style="background-image: url('{{ asset($user->header_image_url) }}'); background-size: cover; height: 200px;">
+        <p class="card-header text-center" style="background-image: url('{{ asset($user->header_image_url) }}'); background-size: cover; height: 200px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#headerImageModal">
         </p>
         <div class="card-body text-left">
             <img src="{{ asset($user->profile_image_url) }}" alt="Profile Image" class="rounded-circle" width="100" height="100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#profileImageModal">
@@ -74,6 +74,20 @@
             </div>
             <div class="modal-body">
                 <img src="{{ asset($user->profile_image_url) }}" alt="Profile Image" class="img-fluid rounded-circle" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ヘッダー画像のモーダル -->
+<div class="modal fade" id="headerImageModal" tabindex="-1" aria-labelledby="headerImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center" style="height: 80vh;">
+                <img src="{{ asset($user->header_image_url) }}" alt="Header Image" class="img-fluid d-block mx-auto" style="max-width: 100%; height: auto; object-fit: contain;">
             </div>
         </div>
     </div>
