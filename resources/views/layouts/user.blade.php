@@ -11,7 +11,7 @@
                     {{ $user->user_name ?? '不明なユーザー' }}
                 </a>
                 <small class="text-muted"> ({{ $user->user_id ?? '不明' }})</small>
-            </h5>
+            </h6>
 
             <!-- プロフィール内容 -->
             <p class="mb-1">{{ $user->profile_description ?? '自己紹介文はありません' }}</p>

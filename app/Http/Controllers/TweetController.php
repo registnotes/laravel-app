@@ -156,6 +156,7 @@ class TweetController extends Controller
                     break;
             }
         }
+        
 
         // 検索結果をページネーション
         $users = $query->paginate(35);

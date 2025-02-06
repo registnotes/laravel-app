@@ -6,7 +6,7 @@
         <p class="card-header text-center" style="background-image: url('{{ asset($user->header_image_url) }}'); background-size: cover; height: 200px;">
         </p>
         <div class="card-body text-left">
-            <img src="{{ asset($user->profile_image_url) }}" alt="Profile Image" class="rounded-circle" width="100" height="100">
+            <img src="{{ asset($user->profile_image_url) }}" alt="Profile Image" class="rounded-circle" width="100" height="100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#profileImageModal">
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <h3>{{ $user->user_name }}</h3>
                 <!-- プロフィール編集ボタン（本人のみ表示） -->
@@ -60,4 +60,24 @@
         @endforeach
     </div>
 </div>
+
+
+
+
+
+<!-- プロフィール画像のモーダル -->
+<div class="modal fade" id="profileImageModal" tabindex="-1" aria-labelledby="profileImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ asset($user->profile_image_url) }}" alt="Profile Image" class="img-fluid rounded-circle" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection
