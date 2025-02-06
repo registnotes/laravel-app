@@ -158,7 +158,7 @@ class TweetController extends Controller
         }
 
         // 検索結果をページネーション
-        $users = $query->paginate(10);
+        $users = $query->paginate(35);
 
         return view('search.user', compact('users'));
     }
@@ -179,7 +179,7 @@ class TweetController extends Controller
         // いいねしたツイートを取得
         $likedTweets = Tweet::whereHas('likes', function ($query) use ($user) {
             $query->where('user_id', $user->user_id);
-        })->latest()->paginate(10);
+        })->latest()->paginate(35);
     
         return view('profile.likes', compact('user', 'likedTweets'));
     }
@@ -193,7 +193,7 @@ class TweetController extends Controller
         $mediaTweets = Tweet::where('user_id', $user->user_id)
                         ->whereNotNull('tweet_image_path')
                         ->latest()
-                        ->paginate(10);  // ページネーションを設定
+                        ->paginate(35);  // ページネーションを設定
 
         return view('profile.media', compact('user', 'mediaTweets'));
     }

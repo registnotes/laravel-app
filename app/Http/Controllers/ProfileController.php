@@ -50,7 +50,7 @@ class ProfileController extends Controller
     public function following($user_id)
     {
         $user = User::where('user_id', $user_id)->firstOrFail();
-        $following = $user->followings()->paginate(10);  // ページネーションを追加
+        $following = $user->followings()->paginate(35);  // ページネーションを追加
 
         return view('profile.following', compact('user', 'following'));
     }
@@ -59,7 +59,7 @@ class ProfileController extends Controller
     public function followers($user_id)
     {
         $user = User::where('user_id', $user_id)->firstOrFail();
-        $followers = $user->followers()->paginate(10);  // ページネーションを追加
+        $followers = $user->followers()->paginate(35);  // ページネーションを追加
 
         return view('profile.followers', compact('user', 'followers'));
     }
@@ -78,7 +78,7 @@ class ProfileController extends Controller
         // いいねしたツイートを取得
         $likedTweets = Tweet::whereHas('likes', function ($query) use ($user) {
             $query->where('user_id', $user->user_id);
-        })->latest()->paginate(10);
+        })->latest()->paginate(35);
     
         return view('profile.likes', compact('user', 'likedTweets'));
     }
@@ -92,7 +92,7 @@ class ProfileController extends Controller
         $mediaTweets = Tweet::where('user_id', $user->user_id)
                         ->whereNotNull('tweet_image_path')
                         ->latest()
-                        ->paginate(10);  // ページネーションを設定
+                        ->paginate(35);  // ページネーションを設定
 
         return view('profile.media', compact('user', 'mediaTweets'));
     }
