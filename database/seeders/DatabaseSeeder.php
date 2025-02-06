@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Tweet;
 use App\Models\Following;
+use App\Models\Like;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,14 +16,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(100)->create();
-        Tweet::factory(500)->create();
+        
+        if (User::count() === 0) {
+            User::factory(100)->create();
+        }
+        if (Tweet::count() === 0) {
+            Tweet::factory(500)->create();
+        }
 
         // 100件のフォローデータを作成
-        Following::factory(1000)->create();
+        if (Following::count() === 0) {
+            Following::factory(1000)->create();
+        }
 
         // LikesTableSeeder を呼び出す
-        $this->call(LikesTableSeeder::class);
+        if (Like::count() === 0) {
+            $this->call(LikesTableSeeder::class);
+        }
 
         // User::factory()->create([
         //     'name' => 'Test User',
