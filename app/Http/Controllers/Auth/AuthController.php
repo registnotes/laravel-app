@@ -32,7 +32,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->route('login.home')->with('success', 'ログイン成功しました！');
+            return redirect()->route('tweet.index')->with('success', 'ログイン成功しました！');
         }
 
         return back()->withErrors([

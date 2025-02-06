@@ -6,7 +6,7 @@
 
         <div class="ms-2">
             <!-- ユーザー名とID -->
-            <h5 class="mb-0">
+            <h6 class="mb-1">
                 <a href="{{ route('profile.index', ['user_id' => $user->user_id]) }}">
                     {{ $user->user_name ?? '不明なユーザー' }}
                 </a>
@@ -17,10 +17,10 @@
             <p class="mb-1">{{ $user->profile_description ?? '自己紹介文はありません' }}</p>
 
             <!-- フォロワー数、投稿数 -->
-            <p class="text-muted mb-1">フォロワー数: {{ $user->followers->count() }} | 投稿数: {{ $user->tweets->count() }}</p>
+            <!-- <p class="text-muted mb-1">フォロワー数: {{ $user->followers->count() }} | 投稿数: {{ $user->tweets->count() }}</p> -->
 
             <!-- 登録日 -->
-            <small class="text-muted">登録日: {{ $user->created_at->format('Y-m-d') }}</small>
+            <!-- <small class="text-muted">登録日: {{ $user->created_at->format('Y-m-d') }}</small> -->
         </div>
     </div>
 </div>

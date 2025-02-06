@@ -21,8 +21,12 @@ class ProfileController extends Controller
         // フォローしているかどうかを確認
         $isFollowing = $currentUser->isFollowing($user->user_id);
 
+        // フォロー数とフォロワー数を取得
+        $followingCount = $user->followings()->count();
+        $followerCount = $user->followers()->count();
+
         // ビューにユーザー情報とツイートを渡す
-        return view('profile.index', compact('user', 'tweets', 'isFollowing'));
+        return view('profile.index', compact('user', 'tweets', 'isFollowing', 'followingCount', 'followerCount'));
     }
 
     // フォロー処理
