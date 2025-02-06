@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker; // ここを追加
 use App\Models\User; // Userモデルをインポート
+use Illuminate\Support\Facades\File;
+
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tweet>
@@ -23,6 +25,22 @@ class TweetFactory extends Factory
         // ランダムにユーザーIDを取得
         $user_id = User::inRandomOrder()->first()->user_id; // usersテーブルからランダムにuser_idを取得
 
+        // 性別をランダムに取得
+        $gender = User::find($user_id)->gender;
+
+        // 性別に応じたツイート内容を選択
+        $tweetFile = storage_path('app/public/tweet_' . $gender . '.txt');
+        $tweetLines = file($tweetFile, FILE_IGNORE_NEW_LINES);
+        $tweetContent = $tweetLines[array_rand($tweetLines)];
+        // ファイルが存在するか確認
+        // if (file_exists($tweetFile)) {
+        //     $tweetLines = file($tweetFile, FILE_IGNORE_NEW_LINES);
+        //     $tweetContent = $tweetLines[array_rand($tweetLines)];
+        // } else {
+        //     // ファイルが見つからない場合はデフォルトのツイートを使用
+        //     $tweetContent = "デフォルトのツイート内容";
+        // }
+
         // 画像を設定するかどうかランダムで決定（2割の確率で画像あり）
         $hasImage = rand(1, 5) <= 2;  // 1~5のうち、1の確率で画像あり
 
@@ -38,7 +56,7 @@ class TweetFactory extends Factory
         return [
             'tweet_id' => Str::random(20),
             'user_id' => $user_id,  // ランダムに取得したuser_id
-            'tweet_content' => fake()->realText(140),
+            'tweet_content' => $tweetContent,  // ランダムなツイート内容
             'tweet_image_path' => $tweet_image_path,  // 画像パス（nullの場合は画像なし）
             'created_at' => now(),
             'updated_at' => now(),

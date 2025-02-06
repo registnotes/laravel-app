@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('header_image_url')->default('storage/images/default_header_image.png');
             $table->string('profile_image_url')->default('storage/images/default_profile_image.png');
             $table->string('profile_url')->nullable();
+            $table->string('gender')->nullable();
             $table->timestamps();
         });
 
