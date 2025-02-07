@@ -21,7 +21,7 @@ class LikesTableSeeder extends Seeder
 
         foreach ($users as $user) {
             // 各ユーザーがランダムにツイートへいいね（最大10件）
-            $tweets->random(rand(1, 30))->each(function ($tweet) use ($user) {
+            $tweets->random(rand(1, 60))->each(function ($tweet) use ($user) {
                 // すでに存在しない場合のみいいねを作成
                 Like::firstOrCreate([
                     'user_id' => $user->user_id,

@@ -8,7 +8,7 @@
         <div class="card-body text-left">
             <img src="{{ asset($user->profile_image_url) }}" alt="Profile Image" class="rounded-circle" width="100" height="100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#profileImageModal">
             <div class="d-flex justify-content-between align-items-center mt-2">
-                <h3>{{ $user->user_name }}</h3>
+                <h4>{{ $user->user_name }}</h4>
                 <!-- プロフィール編集ボタン（本人のみ表示） -->
                 @if(auth()->user()->user_id == $user->user_id)
                     <a href="{{ route('profile.edit', $user->user_id) }}" class="btn btn-light mt-3" style="border: 1px solid black;">プロフィール編集</a>
