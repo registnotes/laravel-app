@@ -18,15 +18,15 @@ class DatabaseSeeder extends Seeder
     {
         
         if (User::count() === 0) {
-            User::factory(100)->create();
+            User::factory(40)->create();
         }
         if (Tweet::count() === 0) {
-            Tweet::factory(500)->create();
+            Tweet::factory(1000)->create();
         }
 
         // 100件のフォローデータを作成
         if (Following::count() === 0) {
-            Following::factory(1000)->create();
+            Following::factory(600)->create();
         }
 
         // LikesTableSeeder を呼び出す
