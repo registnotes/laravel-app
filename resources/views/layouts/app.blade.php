@@ -8,21 +8,37 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <style>
-        /* 左カラムを固定 */
-        .left-column {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 25%; /* 左カラムの幅 */
-            height: 100vh; /* 画面全体の高さ */
-            overflow-y: auto; /* 内容がはみ出す場合はスクロール */
-            z-index: 1000; /* 他の要素より上に表示 */
+        /* デスクトップ表示で左カラムを固定 */
+        @media (min-width: 768px) {
+            .left-column {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 25%; /* 左カラムの幅 */
+                height: 100vh; /* 画面全体の高さ */
+                overflow-y: auto; /* 内容がはみ出す場合はスクロール */
+                padding-top: 20px; /* 上部に余白を追加 */
+            }
+
+            /* 中央カラムの幅調整 */
+            .main-column {
+                margin-left: 25%; /* 左カラムの幅分だけ右に移動 */
+            }
         }
 
-        /* 中央カラムの幅調整 */
-        .main-column {
-            margin-left: 25%; /* 左カラムの幅分だけ右に移動 */
-            padding-left: 20px; /* 左カラムと重ならないように */
+        /* スマホ表示では左カラムを通常のフローに戻す */
+        @media (max-width: 767px) {
+            .left-column {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding-top: 0;
+            }
+
+            /* 中央カラムの幅調整 */
+            .main-column {
+                margin-left: 0; /* 左カラムが通常のフローに戻ったので調整 */
+            }
         }
     </style>
 </head>
@@ -31,7 +47,7 @@
         <div class="row">
             <!-- 左カラム -->
             <div class="col-md-3 bg-light p-3 left-column">
-                <h4>左カラム</h4>
+                <h4>cloud-app-lab</h4>
                 <ul class="list-unstyled">
                     <li><a href="{{ route('tweet.index') }}">タイムライン</a></li>
                     <li><a href="{{ route('tweet.create') }}">ツイート</a></li>
