@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    
     <h3>{{ $user->user_name }} がいいねしたツイート</h3>
 
     @if($likedTweets->count() > 0)

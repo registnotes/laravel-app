@@ -20,9 +20,9 @@ Route::group(['middleware' => ['guest']], function() {
 //ログイン後
 Route::group(['middleware' => ['auth']], function() {
     //ホーム画面
-    Route::get('/home', function() {
-        return view('login.home');
-    })->name('login.home')->middleware();
+    Route::get('/settings', function() {
+        return view('login.settings');
+    })->name('login.settings')->middleware();
     //ログアウト
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     //ツイート表示
