@@ -125,7 +125,7 @@ class TweetController extends Controller
         }
 
         // 検索結果をページネーション
-        $tweets = $query->paginate(10);
+        $tweets = $query->paginate(35);
 
         return view('search.tweet', compact('tweets'));
     }
