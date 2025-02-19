@@ -11,9 +11,7 @@ class Following extends Authenticatable
 {
     use HasFactory;
 
-    // テーブル名を明示的に指定
-    protected $table = 'following'; // テーブル名を「following」に変更
-
+    protected $table = 'following';
     protected $fillable = ['follower_user_id', 'following_user_id'];
 
     // `followingUser` リレーションを追加

@@ -27,7 +27,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         // デバッグ用: 取得した認証情報をログに出力
-        \Log::info('Attempting to login with credentials:', $credentials);
+        //\Log::info('Attempting to login with credentials:', $credentials);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();

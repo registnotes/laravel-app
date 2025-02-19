@@ -29,6 +29,7 @@ class ProfileController extends Controller
         return view('profile.index', compact('user', 'tweets', 'isFollowing', 'followingCount', 'followerCount'));
     }
 
+
     // フォロー処理
     public function follow($user_id)
     {
@@ -46,8 +47,6 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.index', $user->user_id);
     }
-
-
 
 
     // フォローしている人を表示
@@ -69,17 +68,11 @@ class ProfileController extends Controller
     }
 
 
-
-
-
-
-
-
+    //いいねしたツイートを取得
     public function likedTweets($user_id)
     {
         $user = User::where('user_id', $user_id)->firstOrFail();
     
-        // いいねしたツイートを取得
         $likedTweets = Tweet::whereHas('likes', function ($query) use ($user) {
             $query->where('user_id', $user->user_id);
         })->latest()->paginate(35);
@@ -87,26 +80,21 @@ class ProfileController extends Controller
         return view('profile.likes', compact('user', 'likedTweets'));
     }
     
+    // 画像付きツイートを取得
     public function mediaTweets($user_id)
     {
-        // ユーザーを取得
         $user = User::where('user_id', $user_id)->firstOrFail();
 
-        // 画像付きツイートを取得し、ページネーションを適用
         $mediaTweets = Tweet::where('user_id', $user->user_id)
                         ->whereNotNull('tweet_image_path')
                         ->latest()
-                        ->paginate(35);  // ページネーションを設定
+                        ->paginate(35);
 
         return view('profile.media', compact('user', 'mediaTweets'));
     }
 
 
-
-
-
-
-
+    //プロフィールの編集画面
     public function edit($user_id)
     {
         $user = User::where('user_id', $user_id)->firstOrFail();
@@ -119,6 +107,7 @@ class ProfileController extends Controller
         return view('profile.edit', compact('user'));
     }
 
+    //プロフィール情報更新処理
     public function update(Request $request, $user_id)
     {
         $user = User::where('user_id', $user_id)->firstOrFail();
@@ -156,7 +145,4 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.index', $user->user_id)->with('success', 'プロフィールが更新されました。');
     }
-
-
-
 }

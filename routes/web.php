@@ -55,5 +55,4 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/search/tweets', [TweetController::class, 'searchTweets'])->name('search.tweet');
     //ユーザー検索ページ
     Route::get('/search/users', [TweetController::class, 'searchUsers'])->name('search.user');
-
 });

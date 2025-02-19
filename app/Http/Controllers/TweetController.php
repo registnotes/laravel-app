@@ -67,14 +67,10 @@ class TweetController extends Controller
     }
 
 
-
-
-
-
     // いいねを追加または解除する処理
     public function toggleLike($tweet_id)
     {
-        $user_id = auth()->user()->user_id; // 現在ログインしているユーザーのID
+        $user_id = auth()->user()->user_id;
 
         // いいねが存在するかを確認
         $like = Like::where('user_id', $user_id)->where('tweet_id', $tweet_id)->first();
@@ -92,11 +88,6 @@ class TweetController extends Controller
             return back()->with('success', 'いいねしました');
         }
     }
-
-
-
-
-
 
 
     // ツイート検索の処理
@@ -156,53 +147,10 @@ class TweetController extends Controller
                     break;
             }
         }
-        
 
         // 検索結果をページネーション
         $users = $query->paginate(35);
 
         return view('search.user', compact('users'));
     }
-
-
-
-
-
-
-
-
-
-
-    public function likedTweets($user_id)
-    {
-        $user = User::where('user_id', $user_id)->firstOrFail();
-    
-        // いいねしたツイートを取得
-        $likedTweets = Tweet::whereHas('likes', function ($query) use ($user) {
-            $query->where('user_id', $user->user_id);
-        })->latest()->paginate(35);
-    
-        return view('profile.likes', compact('user', 'likedTweets'));
-    }
-    
-    public function mediaTweets($user_id)
-    {
-        // ユーザーを取得
-        $user = User::where('user_id', $user_id)->firstOrFail();
-
-        // 画像付きツイートを取得し、ページネーションを適用
-        $mediaTweets = Tweet::where('user_id', $user->user_id)
-                        ->whereNotNull('tweet_image_path')
-                        ->latest()
-                        ->paginate(35);  // ページネーションを設定
-
-        return view('profile.media', compact('user', 'mediaTweets'));
-    }
-    
-
-
-
-
-
-
 }

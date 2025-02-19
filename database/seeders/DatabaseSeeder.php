@@ -16,15 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        
+        // 40件のユーザーデータを作成
         if (User::count() === 0) {
             User::factory(40)->create();
         }
+
+        //1000件のツイートデータを作成
         if (Tweet::count() === 0) {
             Tweet::factory(1000)->create();
         }
 
-        // 100件のフォローデータを作成
+        // 600件のフォローデータを作成
         if (Following::count() === 0) {
             Following::factory(600)->create();
         }
@@ -33,10 +35,5 @@ class DatabaseSeeder extends Seeder
         if (Like::count() === 0) {
             $this->call(LikesTableSeeder::class);
         }
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

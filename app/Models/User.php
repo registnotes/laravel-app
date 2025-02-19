@@ -55,8 +55,6 @@ class User extends Authenticatable
     // }
 
 
-
-
     // フォローする
     public function follow($user_id)
     {
@@ -87,18 +85,9 @@ class User extends Authenticatable
         return $this->followings()->where('following_user_id', $user_id)->exists();
     }
 
-
-
-
-
-    // Userモデル
+    // Userに対するツイートリレーション
     public function tweets()
     {
         return $this->hasMany(Tweet::class, 'user_id');
     }
-
-
-
-
-
 }

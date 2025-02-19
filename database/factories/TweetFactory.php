@@ -23,7 +23,7 @@ class TweetFactory extends Factory
     public function definition(): array
     {
         // ランダムにユーザーIDを取得
-        $user_id = User::inRandomOrder()->first()->user_id; // usersテーブルからランダムにuser_idを取得
+        $user_id = User::inRandomOrder()->first()->user_id;
 
         // 性別をランダムに取得
         $gender = User::find($user_id)->gender;
@@ -32,17 +32,9 @@ class TweetFactory extends Factory
         $tweetFile = storage_path('app/public/tweet_' . $gender . '.txt');
         $tweetLines = file($tweetFile, FILE_IGNORE_NEW_LINES);
         $tweetContent = $tweetLines[array_rand($tweetLines)];
-        // ファイルが存在するか確認
-        // if (file_exists($tweetFile)) {
-        //     $tweetLines = file($tweetFile, FILE_IGNORE_NEW_LINES);
-        //     $tweetContent = $tweetLines[array_rand($tweetLines)];
-        // } else {
-        //     // ファイルが見つからない場合はデフォルトのツイートを使用
-        //     $tweetContent = "デフォルトのツイート内容";
-        // }
 
         // 画像を設定するかどうかランダムで決定（2割の確率で画像あり）
-        $hasImage = rand(1, 5) <= 2;  // 1~5のうち、1の確率で画像あり
+        $hasImage = rand(1, 5) <= 2;
 
         // 画像パスを設定（画像ありの場合）
         $tweet_image_path = null;
@@ -50,8 +42,6 @@ class TweetFactory extends Factory
             $imageIndex = rand(1, 100);  // 1〜100のランダムな画像番号
             $tweet_image_path = 'storage/tweets_seed/tweet_image_' . $imageIndex . '.jpg';  // 画像パス
         }
-
-
 
         return [
             'tweet_id' => Str::random(20),
