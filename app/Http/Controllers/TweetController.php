@@ -17,7 +17,7 @@ class TweetController extends Controller
      */
     public function index(Request $request)
     {
-        // 最新のツイートを10件取得し、ユーザー情報を合わせて取得
+        // 最新のツイートを35件取得し、ユーザー情報を合わせて取得
         $tweets = Tweet::with('user')->latest()->paginate(35);
 
         return view('tweet.index', compact('tweets'));

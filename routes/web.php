@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\ProfileController;
 
@@ -15,6 +16,10 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/' , [AuthController::class, 'showLogin'])->name('showLogin');
     //ログイン処理
     Route::post('/login', [AuthController::class, 'login'])->name('login');
+    //ユーザー登録画面
+    Route::get('/register' , [RegisterController::class, 'showRegister'])->name('showRegister');
+    //ユーザー登録処理
+    Route::post('/register' , [RegisterController::class, 'register'])->name('register');
 });
 
 //ログイン後
@@ -25,7 +30,7 @@ Route::group(['middleware' => ['auth']], function() {
     })->name('login.settings')->middleware();
     //ログアウト
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-    //ツイート表示
+    //全ユーザーのツイート表示
     Route::get('/tweet', [TweetController::class, 'index']) ->name('tweet.index');
     //ツイート入力画面
     Route::get('/tweet/create', [TweetController::class, 'create'])->name('tweet.create');

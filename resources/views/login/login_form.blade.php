@@ -110,7 +110,7 @@
         <button class="btn btn-primary btn-lg btn-block" type="submit">ログイン</button>
 
         <div class="forgot-password">
-            <a href="#">パスワードをお忘れですか？</a>
+            アカウントをお持ちでないですか？ <a href="{{ route('register') }}">新規登録</a>
         </div>
     </form>
 
