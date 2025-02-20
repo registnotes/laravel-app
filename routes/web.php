@@ -10,10 +10,16 @@ Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// 追加: Laravelのデフォルトのリダイレクト先 (/home) を修正
+Route::get('/home', function () {
+    return redirect('/tweet'); // ログイン後のリダイレクト先
+})->name('home');
+
 //ログイン前
 Route::group(['middleware' => ['guest']], function() {
     //ログインフォーム表示
     Route::get('/' , [AuthController::class, 'showLogin'])->name('showLogin');
+    Route::get('/login' , [AuthController::class, 'showLogin'])->name('showLogin');
     //ログイン処理
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     //ユーザー登録画面

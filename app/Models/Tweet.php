@@ -24,7 +24,6 @@ class Tweet extends Authenticatable
 
     ];
 
-
     // Userテーブルに対するいいねリレーション
     public function user()
     {
