@@ -23,6 +23,9 @@ class TweetFactory extends Factory
      */
     public function definition(): array
     {
+        //$s3BaseUrl = "https://s3.ap-northeast-1.amazonaws.com/s3.cloud-app-lab.com/"; 
+        $s3BaseUrl = "https://dev.cloud-app-lab.com/"; //CloudFrontのビヘイビアのパスパターン
+
         // ランダムにユーザーIDを取得
         $user_id = User::inRandomOrder()->first()->user_id;
 
@@ -53,7 +56,7 @@ class TweetFactory extends Factory
             'user_id' => $user_id,  // ランダムに取得したuser_id
             'tweet_content' => $tweetContent,  // ランダムなツイート内容
             //'tweet_image_path' => $tweet_image_path,  // 画像パス（nullの場合は画像なし）
-            'tweet_image_path' => $tweet_image_path ? 'https://s3.ap-northeast-1.amazonaws.com/s3.cloud-app-lab.com/' . $tweet_image_path : null,  // S3のURLを設定
+            'tweet_image_path' => $tweet_image_path ? $s3BaseUrl . $tweet_image_path : null,  // S3のURLを設定
             'created_at' => now(),
             'updated_at' => now(),
         ];

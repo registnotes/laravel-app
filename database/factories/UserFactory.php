@@ -27,7 +27,8 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $s3BaseUrl = "https://s3.ap-northeast-1.amazonaws.com/s3.cloud-app-lab.com/";
+        //$s3BaseUrl = "https://s3.ap-northeast-1.amazonaws.com/s3.cloud-app-lab.com/"; 
+        $s3BaseUrl = "https://dev.cloud-app-lab.com/"; //CloudFrontのビヘイビアのパスパターン
 
         // 性別をランダムに決める
         $gender = $this->faker->randomElement(['male', 'female']);
