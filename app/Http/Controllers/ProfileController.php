@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Tweet;
+use Illuminate\Support\Facades\Storage; // S3用
 
 class ProfileController extends Controller
 {
@@ -127,13 +128,21 @@ class ProfileController extends Controller
 
         // 画像のアップロード処理
         if ($request->hasFile('profile_image')) {
-            $profileImagePath = $request->file('profile_image')->store('profile_images', 'public');
-            $user->profile_image_url = asset('storage/' . $profileImagePath);
+            //ローカルにアップ
+            //$profileImagePath = $request->file('profile_image')->store('profile_images', 'public');
+            //$user->profile_image_url = asset('storage/' . $profileImagePath);
+            //S3にアップ
+            $profileImagePath = $request->file('profile_image')->store('storage/profile_images', 's3');
+            $user->profile_image_url = Storage::disk('s3')->url($profileImagePath);
         }
         
         if ($request->hasFile('header_image')) {
-            $headerImagePath = $request->file('header_image')->store('header_images', 'public');
-            $user->header_image_url = asset('storage/' . $headerImagePath);
+            //ローカルにアップ
+            //$headerImagePath = $request->file('header_image')->store('header_images', 'public');
+            //$user->header_image_url = asset('storage/' . $headerImagePath);
+            //S3にアップ
+            $headerImagePath = $request->file('header_image')->store('storage/header_images', 's3');
+            $user->header_image_url = Storage::disk('s3')->url($headerImagePath);
         }
 
         // その他のデータを更新

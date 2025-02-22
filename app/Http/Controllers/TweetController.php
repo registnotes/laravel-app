@@ -7,6 +7,7 @@ use App\Models\Tweet;
 use Illuminate\Support\Facades\Log; //ログチェック用
 use App\Models\Like;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage; // S3用
 
 
 class TweetController extends Controller
@@ -49,7 +50,9 @@ class TweetController extends Controller
 
         // 画像をアップロードした場合
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('tweets', 'public'); // 'tweets' フォルダに保存
+            //$imagePath = $request->file('image')->store('tweets', 'public'); // 'tweets' フォルダに保存
+            $imagePath = $request->file('image')->store('storage/tweets', 's3'); //S3に保存
+            $imagePath = Storage::disk('s3')->url($imagePath); //S3のURLを取得
             Log::info('Image uploaded: ' . $imagePath);  // 画像パスをログに出力
         } else {
             $imagePath = null;
